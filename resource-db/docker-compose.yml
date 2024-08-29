@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  resource-db:
+    image: mysql:8.0
+    container_name: resource-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: resource_db
+      MYSQL_USER: resource_user
+      MYSQL_PASSWORD: resource_password
+    volumes:
+      - resource-db-data:/var/lib/mysql
+    ports:
+      - "3307:3306"  # ローカルの3307ポートをコンテナの3306ポートにマッピング
+    networks:
+      - resource-net
+
+networks:
+  resource-net:
+
+volumes:
+  resource-db-data:
