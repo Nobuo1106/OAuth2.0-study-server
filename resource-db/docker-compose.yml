@@ -14,10 +14,11 @@ services:
     ports:
       - "3307:3306"  # ローカルの3307ポートをコンテナの3306ポートにマッピング
     networks:
-      - resource-net
+      - resource-network  # 外部ネットワーク名を指定
 
 networks:
-  resource-net:
+  resource-network:
+    external: true  # 外部ネットワークを使用
 
 volumes:
   resource-db-data:
