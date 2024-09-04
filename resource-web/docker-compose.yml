@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  resource-web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: resource-web
+    volumes:
+      - ./resource:/var/www/html
+    ports:
+      - "8081:80"
+    networks:
+      - resource-network  # DBと同じ外部ネットワーク名を使用
+
+networks:
+  resource-network:
+    external: true  # 外部ネットワークを使用
