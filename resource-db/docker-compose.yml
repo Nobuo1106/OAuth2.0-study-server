@@ -12,13 +12,31 @@ services:
     volumes:
       - resource-db-data:/var/lib/mysql
     ports:
-      - "3307:3306"  # ローカルの3307ポートをコンテナの3306ポートにマッピング
+      - "3307:3306"  # リソースDBは3307ポートを使用
     networks:
       - resource-network  # 外部ネットワーク名を指定
 
+  auth-db:
+    image: mysql:8.0
+    container_name: auth-db
+    environment:
+      MYSQL_ROOT_PASSWORD: auth_password
+      MYSQL_DATABASE: auth_db
+      MYSQL_USER: auth_user
+      MYSQL_PASSWORD: auth_password
+    volumes:
+      - auth-db-data:/var/lib/mysql
+    ports:
+      - "3308:3306"  # 認可サーバー用のDBは3308ポートを使用
+    networks:
+      - auth-network  # 認可サーバー用の外部ネットワークを指定
+
 networks:
   resource-network:
-    external: true  # 外部ネットワークを使用
+    external: true  # リソースサーバーの外部ネットワーク
+  auth-network:
+    external: true  # 認可サーバーの外部ネットワーク
 
 volumes:
   resource-db-data:
+  auth-db-data:
